@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from '@material-ui/core/Button';
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 class Login extends Component {
     constructor() {
@@ -18,6 +19,22 @@ class Login extends Component {
             loginPasswordRequired: "dispNone"
         }
     }
+
+    inputUserNameChangeHandler = (e) => {
+        this.setState({ username: e.target.value })
+    }
+
+    inputLoginPasswordChangeHandler = (e) => {
+        this.setState({ loginPassword: e.target.value });
+    }
+
+    loginClickHandler = () => {
+        this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) :
+            this.setState({ usernameRequired: "dispNone" });
+        this.state.loginPassword === "" ? this.setState({ loginPasswordRequired: "dispBlock" }) :
+            this.setState({ loginPasswordRequired: "dispNone" });
+    }
+
     render() {
         return (
             <div>
@@ -31,13 +48,25 @@ class Login extends Component {
                     <br />
                     <FormControl required>
                         <InputLabel htmlFor="username"> Username </InputLabel>
-                        <Input id="username" type="text" username={this.state.username} />
+                        <Input id="username" 
+                            type="text" 
+                            username={this.state.username} 
+                            onChange={this.inputUserNameChangeHandler} />
+                        <FormHelperText className={this.state.usernameRequired}>
+                            <span className="red">required</span>
+                        </FormHelperText>
                     </FormControl>
                     <br />
                     <br />
                     <FormControl required>
                         <InputLabel htmlFor="Password"> Password </InputLabel>
-                        <Input id="password" type="password" password={this.state.loginPassword}/>
+                        <Input id="password" 
+                            type="password" 
+                            password={this.state.loginPassword}
+                            onChange={this.inputLoginPasswordChangeHandler} />
+                        <FormHelperText className={this.state.loginPasswordRequired}>
+                            <span className="red">required</span>
+                        </FormHelperText>
                     </FormControl>
                     <br/>
                     <br/>
