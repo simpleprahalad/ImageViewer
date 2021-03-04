@@ -16,7 +16,8 @@ class Login extends Component {
             username: "",
             usernameRequired: "dispNone",
             loginPassword: "",
-            loginPasswordRequired: "dispNone"
+            loginPasswordRequired: "dispNone",
+            incorrectCredentials: "dispNone"
         }
     }
 
@@ -33,6 +34,19 @@ class Login extends Component {
             this.setState({ usernameRequired: "dispNone" });
         this.state.loginPassword === "" ? this.setState({ loginPasswordRequired: "dispBlock" }) :
             this.setState({ loginPasswordRequired: "dispNone" });
+        
+        let username = "prahalad",
+            password = "upgrad",
+            accessToken = "IGQVJWZA1hHdzFBT2hCSHhKbVRuSm95ZAlVDUThXUGZAJUzFHVlRCd2dqTTl0UXp6czllVDlfamRDUEF3Q1pCUVZAiaktRMVhTTkVNV3czTzZAzd3JHMnNpYXZAzQ3A4dXFaRzBaYnZANOGNjNDR5WEJvdGJWRjNQWi13Nkt6MkxR";
+            
+        this.setState({ incorrectCredentials: "dispNone" })
+        if( (this.state.username === username) && (this.state.loginPassword === password) )  {
+            window.sessionStorage.setItem("access-token", accessToken);
+        } else {
+            if(this.state.username !== "" && this.state.loginPassword !== "" ) {
+                this.setState({ incorrectCredentials: "dispBlock" })
+            }
+        }
     }
 
     render() {
@@ -66,6 +80,10 @@ class Login extends Component {
                             onChange={this.inputLoginPasswordChangeHandler} />
                         <FormHelperText className={this.state.loginPasswordRequired}>
                             <span className="red">required</span>
+                        </FormHelperText>
+                        <br />
+                        <FormHelperText className={this.state.incorrectCredentials}>
+                            <span className="red">Incorrect username and/or password</span>
                         </FormHelperText>
                     </FormControl>
                     <br/>
