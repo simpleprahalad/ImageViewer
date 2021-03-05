@@ -42,6 +42,7 @@ class Login extends Component {
         this.setState({ incorrectCredentials: "dispNone" })
         if( (this.state.username === username) && (this.state.loginPassword === password) )  {
             window.sessionStorage.setItem("access-token", accessToken);
+            this.props.history.push("/home");
         } else {
             if(this.state.username !== "" && this.state.loginPassword !== "" ) {
                 this.setState({ incorrectCredentials: "dispBlock" })
