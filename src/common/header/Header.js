@@ -3,6 +3,7 @@ import "./Header.css";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import Input from "@material-ui/core/Input";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = (theme) => ({
   search: {
@@ -63,6 +64,9 @@ class Header extends Component {
               onChange={this.inputChangeHandler}
             />
           </div>
+          <IconButton className="icon">
+            <img src={this.props.profilePic} alt="pic" className="profile-image"></img>
+          </IconButton>
         </header>
       </div>
     );
