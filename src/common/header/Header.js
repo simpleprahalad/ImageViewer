@@ -37,6 +37,9 @@ const styles = (theme) => ({
 class Header extends Component {
   constructor() {
     super();
+    this.state = {
+      type: "",
+    };
   }
 
   inputChangeHandler = (e) => {
@@ -48,25 +51,48 @@ class Header extends Component {
     return (
       <div>
         <header className="app-header">
-          <span className="logo">Image Viewer</span>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <Input
-              disableUnderline={true}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              onChange={this.inputChangeHandler}
-            />
+          <span
+            className="logo"
+            style={this.props.home === "true" ? { cursor: "pointer" } : null}
+          >
+            Image Viewer
+          </span>
+          <div>
+            {this.props.home === "true" ? (
+              <div className="pro-pic">
+                <IconButton className="icon">
+                  <img
+                    src={this.props.profilePic}
+                    alt="pic"
+                    className="profile-image"
+                  ></img>
+                </IconButton>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-          <IconButton className="icon">
-            <img src={this.props.profilePic} alt="pic" className="profile-image"></img>
-          </IconButton>
+          <div>
+            {this.props.home === "true" ? (
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <Input
+                  disableUnderline={true}
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={this.inputChangeHandler}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </header>
       </div>
     );
