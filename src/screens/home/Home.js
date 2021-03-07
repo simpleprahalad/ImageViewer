@@ -17,27 +17,11 @@ import TextField from "@material-ui/core/TextField";
 import profilePic from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
-  root: {
-    maxWidth: 345,
-  },
   media: {
     height: 0,
     objectFit: "cover",
     paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  }
 });
 
 class Home extends Component {
@@ -135,11 +119,7 @@ class Home extends Component {
                 <Card className="cards-layout" key={"post" + post.id}>
                   <div className="posts">
                     <CardHeader
-                      avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                          <img src={post.profilePic} alt="pic" />
-                        </Avatar>
-                      }
+                      avatar={<Avatar src={post.profilePic} alt="pic" />}
                       title={post.username}
                       // subheader="03/10/2018 16:07:24"
                       subheader={
