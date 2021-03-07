@@ -14,7 +14,7 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import profilePic from '../../assets/images/profilePic.jpg';
+import profilePic from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
   root: {
@@ -97,7 +97,7 @@ class Home extends Component {
         post.timestamp = new Date(parseInt(parsedData.timestamp) * 1000);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
-        that.setState({postList: newStateArray});
+        that.setState({ postList: newStateArray });
       }
     });
 
@@ -130,60 +130,62 @@ class Home extends Component {
               profilePic={profilePic}
               baseUrl={this.props.baseUrl}
             />
-            <div>
+            <div className="container">
               {this.state.postList.map((post) => (
-                <Card className={classes.root}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
-                        <img src={post.profilePic} alt="pic"/>
-                      </Avatar>
-                    }
-                    title={post.username}
-                    // subheader="03/10/2018 16:07:24"
-                    subheader={
-                      post.timestamp.getMonth() +
-                      1 +
-                      "/" +
-                      post.timestamp.getDate() +
-                      "/" +
-                      post.timestamp.getFullYear() +
-                      " " +
-                      post.timestamp.getHours() +
-                      ":" +
-                      post.timestamp.getMinutes() +
-                      ":" +
-                      post.timestamp.getSeconds()
-                    }
-                  />
-                  <CardMedia
-                    className={classes.media}
-                    image={post.media_url}
-                    title="Paella dish"
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="inherit" component="p">
-                      {post.caption}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <Typography variant="body1" color="inherit" component="p">
-                      7 likes
-                    </Typography>
-                  </CardActions>
-                  <CardActions enablespacing="true">
-                    <TextField placeholder="Add a comment" />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.loginClickHandler}
-                    >
-                      Login
-                    </Button>
-                  </CardActions>
+                <Card className="cards-layout" key={"post" + post.id}>
+                  <div className="posts">
+                    <CardHeader
+                      avatar={
+                        <Avatar aria-label="recipe" className={classes.avatar}>
+                          <img src={post.profilePic} alt="pic" />
+                        </Avatar>
+                      }
+                      title={post.username}
+                      // subheader="03/10/2018 16:07:24"
+                      subheader={
+                        post.timestamp.getMonth() +
+                        1 +
+                        "/" +
+                        post.timestamp.getDate() +
+                        "/" +
+                        post.timestamp.getFullYear() +
+                        " " +
+                        post.timestamp.getHours() +
+                        ":" +
+                        post.timestamp.getMinutes() +
+                        ":" +
+                        post.timestamp.getSeconds()
+                      }
+                    />
+                    <CardMedia
+                      className={classes.media}
+                      image={post.media_url}
+                      title="Paella dish"
+                    />
+                    <CardContent>
+                      <Typography variant="body2" color="inherit" component="p">
+                        {post.caption}
+                      </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                      <IconButton aria-label="add to favorites">
+                        <FavoriteIcon />
+                      </IconButton>
+                      <Typography variant="body1" color="inherit" component="p">
+                        7 likes
+                      </Typography>
+                    </CardActions>
+                    <CardActions enablespacing="true">
+                      <TextField placeholder="Add a comment" />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.addClickHandler}
+                      >
+                        ADD
+                      </Button>
+                    </CardActions>
+                  </div>
                 </Card>
               ))}
             </div>
