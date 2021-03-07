@@ -14,3 +14,18 @@
 .posts {
   margin: 5px 20px;
 }
+
+.dispNone {
+  display: none;
+}
+
+.dispBlock {
+  display: block;
+}
+
+.likes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0px 0px 0px;
+}

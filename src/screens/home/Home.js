@@ -8,9 +8,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
@@ -26,10 +27,13 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      profilePic: "https://instagram.fblr1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/145135244_432529917944662_4618383355731614603_n.jpg?tp=1&_nc_ht=instagram.fblr1-3.fna.fbcdn.net&_nc_ohc=gwvhBj0cQ1UAX9g_7sP&oh=706ee3d41b8fdd74c3fe2ecefc22afe1&oe=60701196",
+      profilePic:
+        "https://instagram.fblr1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/145135244_432529917944662_4618383355731614603_n.jpg?tp=1&_nc_ht=instagram.fblr1-3.fna.fbcdn.net&_nc_ohc=gwvhBj0cQ1UAX9g_7sP&oh=706ee3d41b8fdd74c3fe2ecefc22afe1&oe=60701196",
       endpoint1: [],
       postListForSearch: [],
       postList: [],
+      likeIcon: "dispBlock",
+      likedIcon: "dispNone",
     };
   }
 
@@ -77,6 +81,10 @@ class Home extends Component {
         post.media_url = parsedData.media_url;
         post.profilePic = that.state.profilePic;
         post.username = parsedData.username;
+        post.likeIcon = "dispBlock";
+        post.likedIcon = "dispNone";
+        post.likes = {};
+        post.likes.count = 5;
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
@@ -100,6 +108,41 @@ class Home extends Component {
 
   myCallback = (filteredPost) => {
     this.setState({ postList: filteredPost });
+  };
+
+  //function to add a like to a post
+  likeClickHandler = (id) => {
+    let postList = this.state.postList;
+    postList.forEach(function (post) {
+      // if the post id equal to the liked post id then display
+      // the likedIcon, hide the likeIcon, and increment like count by 1
+      if (post.id === id) {
+        post.likes.count += 1;
+        post.likeIcon = "dispNone";
+        post.likedIcon = "dispBlock";
+        this.setState({
+          likeIcon: "dispNone",
+          likedIcon: "dispBlock",
+        });
+      }
+    }, this);
+  };
+
+  //function to unlike a post
+  likedClickHandler = (id) => {
+    let postList = this.state.postList;
+    postList.forEach(function (post) {
+      // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+      if (post.id === id) {
+        post.likes.count -= 1;
+        post.likeIcon = "dispBlock";
+        post.likedIcon = "dispNone";
+        this.setState({
+          likeIcon: "dispBlock",
+          likedIcon: "dispNone",
+        });
+      }
+    }, this);
   };
 
   render() {
@@ -150,12 +193,27 @@ class Home extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
-                      <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                      </IconButton>
-                      <Typography variant="body1" color="inherit" component="p">
-                        7 likes
-                      </Typography>
+                      <div className="likes">
+                        <div
+                          className={post.likeIcon}
+                          onClick={() => this.likeClickHandler(post.id)}
+                        >
+                          <FavoriteBorderIcon />
+                        </div>
+                        <div className={post.likedIcon}>
+                          <FavoriteIcon
+                            style={{ color: "red" }}
+                            onClick={() => this.likedClickHandler(post.id)}
+                          />
+                        </div>
+                        <span style={{ marginLeft: 10, marginBottom: 8 }}>
+                          {post.likes.count < 2 ? (
+                            <div> {post.likes.count} like </div>
+                          ) : (
+                            <div> {post.likes.count} likes </div>
+                          )}
+                        </span>
+                      </div>
                     </CardActions>
                     <CardActions enablespacing="true">
                       <TextField placeholder="Add a comment" />
