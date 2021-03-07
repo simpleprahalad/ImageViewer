@@ -10,7 +10,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -21,7 +20,7 @@ const useStyles = (theme) => ({
     height: 0,
     objectFit: "cover",
     paddingTop: "56.25%", // 16:9
-  }
+  },
 });
 
 class Home extends Component {
@@ -30,6 +29,7 @@ class Home extends Component {
     this.state = {
       profilePic: "",
       endpoint1: [],
+      postListForSearch: [],
       postList: [],
     };
   }
@@ -45,7 +45,7 @@ class Home extends Component {
           endpoint1: JSON.parse(this.responseText).data,
         });
         that.state.endpoint1.map((info) => {
-          that.getImages(info);
+          return that.getImages(info);
         });
       }
     });
@@ -82,6 +82,7 @@ class Home extends Component {
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
         that.setState({ postList: newStateArray });
+        that.setState({ postListForSearch: newStateArray });
       }
     });
 
@@ -98,9 +99,9 @@ class Home extends Component {
     xhr.send(data);
   }
 
-  getCardIconImage() {
-    return "https://www.upgrad.com/favicon.ico";
-  }
+  myCallback = (filteredPost) => {
+    this.setState({ postList: filteredPost });
+  };
 
   render() {
     const { classes } = this.props;
@@ -113,6 +114,8 @@ class Home extends Component {
               home="true"
               profilePic={profilePic}
               baseUrl={this.props.baseUrl}
+              list={this.state.postListForSearch}
+              callbackFromHome={this.myCallback}
             />
             <div className="container">
               {this.state.postList.map((post) => (
