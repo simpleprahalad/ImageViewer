@@ -10,7 +10,6 @@ const styles = (theme) => ({
     position: "relative",
     borderRadius: "4px",
     backgroundColor: "#c0c0c0",
-    marginRight: theme.spacing(10),
     marginLeft: 0,
     width: "300px",
     float: "right",

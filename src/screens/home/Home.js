@@ -17,9 +17,8 @@ import TextField from "@material-ui/core/TextField";
 
 const useStyles = (theme) => ({
   media: {
-    height: 0,
-    objectFit: "cover",
-    paddingTop: "56.25%", // 16:9
+    height: 150,
+    paddingTop: "56.25%", // 16:9,
   },
 });
 
@@ -182,49 +181,48 @@ class Home extends Component {
                         post.timestamp.getSeconds()
                       }
                     />
-                    <CardMedia
-                      className={classes.media}
-                      image={post.media_url}
-                      title="Paella dish"
-                    />
                     <CardContent>
+                      <CardMedia
+                        className={classes.media}
+                        image={post.media_url}
+                      />
                       <Typography variant="body2" color="inherit" component="p">
                         {post.caption}
                       </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>
-                      <div className="likes">
-                        <div
-                          className={post.likeIcon}
-                          onClick={() => this.likeClickHandler(post.id)}
+                      <CardActions disableSpacing>
+                        <div className="likes">
+                          <div
+                            className={post.likeIcon}
+                            onClick={() => this.likeClickHandler(post.id)}
+                          >
+                            <FavoriteBorderIcon />
+                          </div>
+                          <div className={post.likedIcon}>
+                            <FavoriteIcon
+                              style={{ color: "red" }}
+                              onClick={() => this.likedClickHandler(post.id)}
+                            />
+                          </div>
+                          <span style={{ marginLeft: 10, marginBottom: 8 }}>
+                            {post.likes.count < 2 ? (
+                              <div> {post.likes.count} like </div>
+                            ) : (
+                              <div> {post.likes.count} likes </div>
+                            )}
+                          </span>
+                        </div>
+                      </CardActions>
+                      <CardActions enablespacing="true">
+                        <TextField placeholder="Add a comment" />
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={this.addClickHandler}
                         >
-                          <FavoriteBorderIcon />
-                        </div>
-                        <div className={post.likedIcon}>
-                          <FavoriteIcon
-                            style={{ color: "red" }}
-                            onClick={() => this.likedClickHandler(post.id)}
-                          />
-                        </div>
-                        <span style={{ marginLeft: 10, marginBottom: 8 }}>
-                          {post.likes.count < 2 ? (
-                            <div> {post.likes.count} like </div>
-                          ) : (
-                            <div> {post.likes.count} likes </div>
-                          )}
-                        </span>
-                      </div>
-                    </CardActions>
-                    <CardActions enablespacing="true">
-                      <TextField placeholder="Add a comment" />
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.addClickHandler}
-                      >
-                        ADD
-                      </Button>
-                    </CardActions>
+                          ADD
+                        </Button>
+                      </CardActions>
+                    </CardContent>
                   </div>
                 </Card>
               ))}
