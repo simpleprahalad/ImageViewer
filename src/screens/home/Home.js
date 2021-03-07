@@ -77,7 +77,7 @@ class Home extends Component {
         post.media_url = parsedData.media_url;
         post.profilePic = that.state.profilePic;
         post.username = parsedData.username;
-        post.timestamp = new Date(parseInt(parsedData.timestamp) * 1000);
+        post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
         that.setState({ postList: newStateArray });
