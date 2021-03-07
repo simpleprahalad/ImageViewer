@@ -13,7 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import profilePic from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
   media: {
@@ -27,7 +26,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      profilePic: "",
+      profilePic: "https://instagram.fblr1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/145135244_432529917944662_4618383355731614603_n.jpg?tp=1&_nc_ht=instagram.fblr1-3.fna.fbcdn.net&_nc_ohc=gwvhBj0cQ1UAX9g_7sP&oh=706ee3d41b8fdd74c3fe2ecefc22afe1&oe=60701196",
       endpoint1: [],
       postListForSearch: [],
       postList: [],
@@ -74,9 +73,9 @@ class Home extends Component {
         let newStateArray;
         let post = {};
         post.id = parsedData.id;
-        post.caption = info.caption;
+        post.caption = info.caption || "This is default caption";
         post.media_url = parsedData.media_url;
-        post.profilePic = profilePic;
+        post.profilePic = that.state.profilePic;
         post.username = parsedData.username;
         post.timestamp = new Date(parseInt(parsedData.timestamp) * 1000);
         newStateArray = that.state.postList.slice();
@@ -112,7 +111,7 @@ class Home extends Component {
           <div>
             <Header
               home="true"
-              profilePic={profilePic}
+              profilePic={this.state.profilePic}
               baseUrl={this.props.baseUrl}
               list={this.state.postListForSearch}
               callbackFromHome={this.myCallback}
