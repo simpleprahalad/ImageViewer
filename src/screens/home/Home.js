@@ -11,9 +11,10 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 
 const useStyles = (theme) => ({
   media: {
@@ -33,6 +34,8 @@ class Home extends Component {
       postList: [],
       likeIcon: "dispBlock",
       likedIcon: "dispNone",
+      comment: "",
+      commentArea: "dispNone",
     };
   }
 
@@ -84,6 +87,10 @@ class Home extends Component {
         post.likedIcon = "dispNone";
         post.likes = {};
         post.likes.count = 5;
+        post.postComments = "dispNone";
+        post.commentArea = "";
+        post.clear = "";
+        post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
@@ -142,6 +149,32 @@ class Home extends Component {
         });
       }
     }, this);
+  };
+
+  commentChangeHandler = (e, id) => {
+    this.setState({ comment: e.target.value });
+    let postList = this.state.postList;
+    postList.forEach(function (post) {
+      if (post.id === id) {
+        post.clear = e.target.value;
+      }
+    }, this);
+  };
+
+  addCommentHandler = (id) => {
+    if (this.state.comment === "") {
+      alert("Cannot add Empty comment");
+    } else {
+      let postList = this.state.postList;
+      postList.forEach(function (post) {
+        //if the post id is equal to the commented post id, then add the comment in the commentContent array
+        if (post.id === id) {
+          post.commentContent.push(this.state.comment);
+          this.setState({ comment: "" });
+          post.clear = "";
+        }
+      }, this);
+    }
   };
 
   render() {
@@ -212,16 +245,41 @@ class Home extends Component {
                           </span>
                         </div>
                       </CardActions>
-                      <CardActions enablespacing="true">
-                        <TextField placeholder="Add a comment" />
+                      <div className="comments-section">
+                        {post.commentContent.map((value, key) => {
+                          return (
+                            <span key={"comment" + key}>
+                              <span style={{ fontWeight: "bold" }}>
+                                {post.username}:{" "}
+                              </span>
+                              {value}
+                            </span>
+                          );
+                        })}
+                      </div>
+                      <br />
+                      <div className="comments">
+                        <FormControl className="control">
+                          <InputLabel htmlFor="comment">
+                            Add a comment
+                          </InputLabel>
+                          <Input
+                            comment={this.state.comment}
+                            onChange={(e) =>
+                              this.commentChangeHandler(e, post.id)
+                            }
+                            value={post.clear}
+                          />
+                        </FormControl>
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={this.addClickHandler}
+                          style={{ marginLeft: 20 }}
+                          onClick={() => this.addCommentHandler(post.id)}
                         >
                           ADD
                         </Button>
-                      </CardActions>
+                      </div>
                     </CardContent>
                   </div>
                 </Card>
