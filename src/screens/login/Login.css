@@ -1,18 +1,22 @@
 .red {
-    color: red;
+  color: red;
 }
 
 .card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .card-content {
-    margin: 20px 40px;
+  margin: 20px 40px;
 }
 
 .dispNone {
-    display: none;
+  display: none;
+}
+
+.dispBlock {
+  display: block;
 }
