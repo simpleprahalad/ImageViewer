@@ -246,16 +246,21 @@ class Home extends Component {
                         </div>
                       </CardActions>
                       <div className="comments-section">
-                        {post.commentContent.map((value, key) => {
-                          return (
-                            <span key={"comment" + key}>
-                              <span style={{ fontWeight: "bold" }}>
+                        {post.commentContent.map((value, key) => (
+                          <CardActions>
+                            <div key={"comment" + key}>
+                              <Typography
+                                variant="body2"
+                                color="inherit"
+                                component="span"
+                                style={{ fontWeight: "bold" }}
+                              >
                                 {post.username}:{" "}
-                              </span>
+                              </Typography>
                               {value}
-                            </span>
-                          );
-                        })}
+                            </div>
+                          </CardActions>
+                        ))}
                       </div>
                       <br />
                       <div className="comments">
