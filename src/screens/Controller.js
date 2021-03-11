@@ -18,8 +18,11 @@ class Controller extends Component {
             render={(props) => <Login {...props} baseUrl={this.baseUrl} />}
           />
           <Route
+            exact
             path="/home"
-            render={(props) => <Home {...props} baseUrl={this.baseUrl} />}
+            render={({ history }, props) => (
+              <Home history={history} {...props} baseUrl={this.baseUrl} />
+            )}
           />
         </div>
       </Router>

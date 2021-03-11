@@ -41,6 +41,7 @@ const StyledMenu = withStyles({
   paper: {
     border: "4px",
     backgroundColor: "#ededed",
+    marginTop: "6px",
   },
 })((props) => (
   <Menu
@@ -88,6 +89,12 @@ class Header extends Component {
     this.setState({ type: null });
   };
 
+  //function to clear the session storage and redirect to the login page
+  logoutHandler = () => {
+    sessionStorage.removeItem("access-token");
+    this.props.history.push("/");
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -128,9 +135,14 @@ class Header extends Component {
                   </StyledMenuItem>
                   <hr style={{ marginLeft: 15, marginRight: 15 }} />
                   <StyledMenuItem>
-                    <Typography type="body2" style={{ fontWeight: "bold" }}>
-                      Logout
-                    </Typography>
+                    <ListItemText
+                      primary={
+                        <Typography type="body2" style={{ fontWeight: "bold" }}>
+                          Logout
+                        </Typography>
+                      }
+                      onClick={this.logoutHandler}
+                    />
                   </StyledMenuItem>
                 </StyledMenu>
               </div>

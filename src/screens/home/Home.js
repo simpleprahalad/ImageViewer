@@ -191,6 +191,7 @@ class Home extends Component {
               baseUrl={this.props.baseUrl}
               list={this.state.postListForSearch}
               callbackFromHome={this.myCallback}
+              history={this.props.history}
             />
             <div className="container">
               {this.state.postList.map((post) => (
@@ -300,7 +301,7 @@ class Home extends Component {
             </div>
           </div>
         ) : (
-          ""
+          this.props.history.push("/")
         )}
       </div>
     );
