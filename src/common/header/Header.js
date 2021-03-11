@@ -89,6 +89,10 @@ class Header extends Component {
     this.setState({ type: null });
   };
 
+  myAccountHandler = () => {
+    this.props.history.push("/profile");
+  }
+
   //function to clear the session storage and redirect to the login page
   logoutHandler = () => {
     sessionStorage.removeItem("access-token");
@@ -130,6 +134,7 @@ class Header extends Component {
                           My Account
                         </Typography>
                       }
+                      onClick={this.myAccountHandler}
                     />
                   </StyledMenuItem>
                   <hr style={{ marginLeft: 15, marginRight: 15 }} />
