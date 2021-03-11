@@ -90,7 +90,7 @@ class Home extends Component {
         post.postComments = "dispNone";
         post.commentArea = "";
         post.clear = "";
-        post.tags = "#tag1" + " " + "#tag2";
+        post.tags = `#tag1 #tag2`;
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();

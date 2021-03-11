@@ -109,12 +109,11 @@ class Header extends Component {
           <div>
             {this.props.home === "true" ? (
               <div className="pro-pic">
-                <IconButton className="icon">
+                <IconButton className="icon" onClick={this.openHandler}>
                   <img
                     src={this.props.profilePic}
                     alt="pic"
                     className="profile-image"
-                    onClick={this.openHandler}
                   ></img>
                 </IconButton>
                 <StyledMenu
