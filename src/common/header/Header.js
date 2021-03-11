@@ -132,17 +132,26 @@ class Header extends Component {
                   open={Boolean(this.state.type)}
                   onClose={this.closeHandler}
                 >
-                  <StyledMenuItem>
-                    <ListItemText
-                      primary={
-                        <Typography type="body2" style={{ fontWeight: "bold" }}>
-                          My Account
-                        </Typography>
-                      }
-                      onClick={this.myAccountHandler}
-                    />
-                  </StyledMenuItem>
-                  <hr style={{ marginLeft: 15, marginRight: 15 }} />
+                  {this.props.home === "true" ? (
+                    <div>
+                      <StyledMenuItem>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              type="body2"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              My Account
+                            </Typography>
+                          }
+                          onClick={this.myAccountHandler}
+                        />
+                      </StyledMenuItem>
+                      <hr style={{ marginLeft: 15, marginRight: 15 }} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <StyledMenuItem>
                     <ListItemText
                       primary={
