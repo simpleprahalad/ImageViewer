@@ -91,7 +91,7 @@ class Header extends Component {
 
   myAccountHandler = () => {
     this.props.history.push("/profile");
-  }
+  };
 
   //function to clear the session storage and redirect to the login page
   logoutHandler = () => {
@@ -111,7 +111,7 @@ class Header extends Component {
             Image Viewer
           </span>
           <div>
-            {this.props.home === "true" ? (
+            {this.props.home === "true" || this.props.profile === "true" ? (
               <div className="pro-pic">
                 <IconButton className="icon" onClick={this.openHandler}>
                   <img
