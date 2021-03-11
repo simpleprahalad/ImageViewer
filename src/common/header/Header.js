@@ -93,6 +93,10 @@ class Header extends Component {
     this.props.history.push("/profile");
   };
 
+  logoHandler = () => {
+    this.props.history.push("/home");
+  };
+
   //function to clear the session storage and redirect to the login page
   logoutHandler = () => {
     sessionStorage.removeItem("access-token");
@@ -106,7 +110,8 @@ class Header extends Component {
         <header className="app-header">
           <span
             className="logo"
-            style={this.props.home === "true" ? { cursor: "pointer" } : null}
+            style={this.props.profile === "true" ? { cursor: "pointer" } : null}
+            onClick={this.props.profile === "true" ? this.logoHandler : null}
           >
             Image Viewer
           </span>
