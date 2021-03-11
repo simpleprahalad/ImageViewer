@@ -90,6 +90,7 @@ class Home extends Component {
         post.postComments = "dispNone";
         post.commentArea = "";
         post.clear = "";
+        post.tags = "#tag1" + " " + "#tag2";
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
@@ -221,6 +222,13 @@ class Home extends Component {
                       />
                       <Typography variant="body2" color="inherit" component="p">
                         {post.caption}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        style={{ color: "blue" }}
+                        display="inline"
+                      >
+                        {post.tags}
                       </Typography>
                       <CardActions disableSpacing>
                         <div className="likes">
