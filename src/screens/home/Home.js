@@ -15,6 +15,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import profileImg from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
   media: {
@@ -27,8 +28,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      profilePic:
-        "https://instagram.fblr1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/145135244_432529917944662_4618383355731614603_n.jpg?tp=1&_nc_ht=instagram.fblr1-3.fna.fbcdn.net&_nc_ohc=gwvhBj0cQ1UAX9g_7sP&oh=706ee3d41b8fdd74c3fe2ecefc22afe1&oe=60701196",
+      profilePic: profileImg,
       endpoint1: [],
       postListForSearch: [],
       postList: [],
