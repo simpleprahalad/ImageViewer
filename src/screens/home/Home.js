@@ -85,12 +85,11 @@ class Home extends Component {
         post.username = parsedData.username;
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
-        post.likes = {};
-        post.likes.count = 5;
+        post.likesCount = Math.floor(Math.random() * 10);
         post.postComments = "dispNone";
         post.commentArea = "";
         post.clear = "";
-        post.tags = `#tag1 #tag2`;
+        post.tags = post.caption.match(/#\S+/g);
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
@@ -113,7 +112,7 @@ class Home extends Component {
     xhr.send(data);
   }
 
-  myCallback = (filteredPost) => {
+  filteredPostHandler = (filteredPost) => {
     this.setState({ postList: filteredPost });
   };
 
@@ -124,7 +123,7 @@ class Home extends Component {
       // if the post id equal to the liked post id then display
       // the likedIcon, hide the likeIcon, and increment like count by 1
       if (post.id === id) {
-        post.likes.count += 1;
+        post.likesCount += 1;
         post.likeIcon = "dispNone";
         post.likedIcon = "dispBlock";
         this.setState({
@@ -141,7 +140,7 @@ class Home extends Component {
     postList.forEach(function (post) {
       // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
       if (post.id === id) {
-        post.likes.count -= 1;
+        post.likesCount -= 1;
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
         this.setState({
@@ -190,7 +189,7 @@ class Home extends Component {
               profilePic={this.state.profilePic}
               baseUrl={this.props.baseUrl}
               list={this.state.postListForSearch}
-              callbackFromHome={this.myCallback}
+              callbackFromHome={this.filteredPostHandler}
               history={this.props.history}
             />
             <div className="container">
@@ -246,10 +245,10 @@ class Home extends Component {
                             />
                           </div>
                           <span style={{ marginLeft: 10, marginBottom: 8 }}>
-                            {post.likes.count < 2 ? (
-                              <div> {post.likes.count} like </div>
+                            {post.likesCount < 2 ? (
+                              <div> {post.likesCount} like </div>
                             ) : (
-                              <div> {post.likes.count} likes </div>
+                              <div> {post.likesCount} likes </div>
                             )}
                           </span>
                         </div>
