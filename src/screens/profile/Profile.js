@@ -5,6 +5,42 @@ import "./Profile.css";
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
+import Modal from "@material-ui/core/Modal";
+import { withStyles } from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const styles = (theme) => ({
+  paper: {
+    position: "absolute",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: "20px",
+  },
+
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: "95%",
+    height: 750,
+    cursor: "pointer",
+    overflow: "hidden",
+  },
+});
 
 class Profile extends Component {
   constructor() {
@@ -17,6 +53,7 @@ class Profile extends Component {
       NumOfUsersFollowed: 10, // hard coded
       NumOfFollowers: 50,
       fullName: "Prahalad Maheswari",
+      openModal: false,
     };
   }
 
@@ -75,7 +112,16 @@ class Profile extends Component {
     xhr.send(data);
   }
 
+  openModalHandler = () => {
+    this.setState({ openModal: true });
+  };
+
+  modalCloseHander = () => {
+    this.setState({ openModal: false });
+  };
+
   render() {
+    const { classes } = this.props;
     return (
       <div>
         {sessionStorage.getItem("access-token") !== null ? (
@@ -118,21 +164,49 @@ class Profile extends Component {
                       Followed By: {this.state.NumOfFollowers}
                     </Typography>
                   </div>
-                  {
-                    <div className="profile-header-row3">
-                      <Typography
-                        variant="h6"
-                        component="h1"
-                        style={{ marginRight: "20px" }}
-                      >
-                        {this.state.fullName}
-                      </Typography>
-                      <Fab color="secondary" aria-label="edit">
-                        <EditIcon />
-                      </Fab>
-                    </div>
-                  }
+                  <div className="profile-header-row3">
+                    <Typography
+                      variant="h6"
+                      component="h1"
+                      style={{ marginRight: "20px" }}
+                    >
+                      {this.state.fullName}
+                    </Typography>
+                    <Fab
+                      color="secondary"
+                      aria-label="edit"
+                      onClick={this.openModalHandler}
+                    >
+                      <EditIcon />
+                    </Fab>
+                  </div>
                 </div>
+                <Modal
+                  open={this.state.openModal}
+                  onClose={this.modalCloseHander}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div style={getModalStyle()} className={classes.paper}>
+                    <Typography
+                      variant="h5"
+                      component="h1"
+                      style={{ marginBottom: "25px" }}
+                    >
+                      Edit
+                    </Typography>
+                    <br />
+                    <br />
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.editNameHandler}
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </Modal>
               </div>
             </div>
           </div>
@@ -144,4 +218,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default withStyles(styles)(Profile);
