@@ -13,14 +13,11 @@
   flex-direction: column;
 }
 
-img {
+.header-image {
+  margin-left: 150px;
   border-radius: 50%;
   height: 150px;
   width: 150px;
-}
-
-.header-image {
-  margin-left: 150px;
 }
 
 .profile-header-row2 {
@@ -44,4 +41,8 @@ img {
 
 .red {
   color: red;
+}
+
+.body-content {
+  margin: 20px 10px;
 }

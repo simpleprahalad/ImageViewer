@@ -49,7 +49,7 @@ class Home extends Component {
         that.setState({
           endpoint1: JSON.parse(this.responseText).data,
         });
-        that.state.endpoint1.map((info) => {
+        that.state.endpoint1 && that.state.endpoint1.map((info) => {
           return that.getImages(info);
         });
       }
@@ -228,7 +228,7 @@ class Home extends Component {
                         style={{ color: "blue" }}
                         display="inline"
                       >
-                        {post.tags}
+                        {post.tags + " "}
                       </Typography>
                       <CardActions disableSpacing>
                         <div className="likes">

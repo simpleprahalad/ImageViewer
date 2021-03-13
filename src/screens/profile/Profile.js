@@ -12,6 +12,8 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 
 function getModalStyle() {
   const top = 50;
@@ -54,12 +56,13 @@ class Profile extends Component {
       endpoint1: [],
       username: "",
       totalPostCount: 0,
-      NumOfUsersFollowed: 10, // hard coded
-      NumOfFollowers: 50,
+      NumOfUsersFollowed: Math.floor(Math.random() * 100),
+      NumOfFollowers: Math.floor(Math.random() * 100),
       fullName: "Prahalad Maheswari",
       openModal: false,
       nameRequired: "dispNone",
       name: "",
+      postList: [],
     };
   }
 
@@ -74,9 +77,12 @@ class Profile extends Component {
           endpoint1: JSON.parse(this.responseText).data,
         });
         that.setState({
-          totalPostCount: that.state.endpoint1.length,
+          totalPostCount: that.state.endpoint1 && that.state.endpoint1.length,
         });
-        that.getImages(that.state.endpoint1[0]);
+        that.state.endpoint1 &&
+          that.state.endpoint1.map((info) => {
+            return that.getImages(info);
+          });
       }
     });
 
@@ -101,6 +107,26 @@ class Profile extends Component {
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         let parsedData = JSON.parse(this.responseText);
+        let newStateArray;
+        let post = {};
+        post.id = parsedData.id;
+        post.caption = info.caption || "This is default caption";
+        post.media_url = parsedData.media_url;
+        post.profilePic = that.state.profilePic;
+        post.username = parsedData.username;
+        post.likeIcon = "dispBlock";
+        post.likedIcon = "dispNone";
+        post.likesCount = Math.floor(Math.random() * 10);
+        post.postComments = "dispNone";
+        post.commentArea = "";
+        post.clear = "";
+        post.tags = post.caption.match(/#\S+/g);
+        post.commentContent = [];
+        post.timestamp = new Date(parsedData.timestamp);
+        newStateArray = that.state.postList.slice();
+        newStateArray.push(post);
+        console.log(newStateArray);
+        that.setState({ postList: newStateArray });
         that.setState({ username: parsedData.username });
       }
     });
@@ -238,6 +264,22 @@ class Profile extends Component {
                     </Button>
                   </div>
                 </Modal>
+              </div>
+              <div className="body-content">
+                <div className={classes.root}>
+                  {/* display all the user post images */}
+                  <GridList
+                    cellHeight={400}
+                    className={classes.gridList}
+                    cols={3}
+                  >
+                    {this.state.postList.map((post) => (
+                      <GridListTile key={"grid" + post.id}>
+                        <img src={post.media_url} alt={this.state.username} />
+                      </GridListTile>
+                    ))}
+                  </GridList>
+                </div>
               </div>
             </div>
           </div>
