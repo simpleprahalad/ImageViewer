@@ -1,0 +1,34 @@
+.profile-container {
+  margin: 10px 100px;
+}
+
+.profile-header {
+  display: flex;
+}
+
+.header-content {
+  margin: 5px 50px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+}
+
+.header-image {
+  margin-left: 150px;
+}
+
+
+.profile-header-row2 {
+  display: flex;
+  margin-top: 10px;
+}
+
+.profile-header-row3 {
+  margin-top: 30px;
+}
