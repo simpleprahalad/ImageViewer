@@ -59,10 +59,12 @@ class Profile extends Component {
       NumOfUsersFollowed: Math.floor(Math.random() * 100),
       NumOfFollowers: Math.floor(Math.random() * 100),
       fullName: "Prahalad Maheswari",
-      openModal: false,
+      editModal: false,
       nameRequired: "dispNone",
       name: "",
       postList: [],
+      postModal: false,
+      imageUrl: "",
     };
   }
 
@@ -144,12 +146,12 @@ class Profile extends Component {
     xhr.send(data);
   }
 
-  openModalHandler = () => {
-    this.setState({ openModal: true, usernameRequired: "dispNone", name: "" });
+  editModalHandler = () => {
+    this.setState({ editModal: true, usernameRequired: "dispNone", name: "" });
   };
 
   modalCloseHander = () => {
-    this.setState({ openModal: false });
+    this.setState({ editModal: false });
   };
 
   //function to handle the input change event
@@ -162,7 +164,24 @@ class Profile extends Component {
     //if the input field is empty display the required message or else set fullname of the user and close the modal
     this.state.name === ""
       ? this.setState({ nameRequired: "dispBlock" })
-      : this.setState({ fullName: this.state.name, openModal: false });
+      : this.setState({ fullName: this.state.name, editModal: false });
+  };
+
+  postModalCloseHandler = () => {
+    this.setState({ postModal: false });
+  };
+
+  postModalOpenHandler = (postId) => {
+    this.setState({ postModal: true });
+    //filter the post according to the id and display it
+    let clickedPost = this.state.postList.filter((post) => {
+      return post.id === postId;
+    })[0];
+
+    this.setState({
+      imageUrl: clickedPost.media_url,
+      username: clickedPost.username,
+    });
   };
 
   render() {
@@ -220,14 +239,14 @@ class Profile extends Component {
                     <Fab
                       color="secondary"
                       aria-label="edit"
-                      onClick={this.openModalHandler}
+                      onClick={this.editModalHandler}
                     >
                       <EditIcon />
                     </Fab>
                   </div>
                 </div>
                 <Modal
-                  open={this.state.openModal}
+                  open={this.state.editModal}
                   onClose={this.modalCloseHander}
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
@@ -274,12 +293,35 @@ class Profile extends Component {
                     cols={3}
                   >
                     {this.state.postList.map((post) => (
-                      <GridListTile key={"grid" + post.id}>
+                      <GridListTile
+                        key={"grid" + post.id}
+                        onClick={() => this.postModalOpenHandler(post.id)}
+                      >
                         <img src={post.media_url} alt={this.state.username} />
                       </GridListTile>
                     ))}
                   </GridList>
                 </div>
+                <Modal
+                  open={this.state.postModal}
+                  onClose={this.postModalCloseHandler}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div style={getModalStyle()} className={classes.paper}>
+                    <div>
+                      <div style={{ marginRight: "10px" }}>
+                        <img
+                          src={this.state.imageUrl}
+                          alt={this.state.username}
+                          height="90%"
+                          width="100%"
+                        ></img>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                </Modal>
               </div>
             </div>
           </div>
