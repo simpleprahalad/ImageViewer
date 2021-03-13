@@ -14,6 +14,7 @@ import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import Avatar from '@material-ui/core/Avatar';
 
 function getModalStyle() {
   const top = 50;
@@ -309,7 +310,7 @@ class Profile extends Component {
                   aria-describedby="simple-modal-description"
                 >
                   <div style={getModalStyle()} className={classes.paper}>
-                    <div>
+                    <div className="post-modal-container">
                       <div style={{ marginRight: "10px" }}>
                         <img
                           src={this.state.imageUrl}
@@ -318,7 +319,24 @@ class Profile extends Component {
                           width="100%"
                         ></img>
                       </div>
-                      <div></div>
+                      <div>
+                        <div className="post-modal-header">
+                          <Avatar aria-label="recipe" className="avatar">
+                            <img
+                              src={this.state.profilePic}
+                              alt={this.state.username}
+                              className="post-modal-avatar-img"
+                            />
+                          </Avatar>
+                          <Typography
+                            variant="body1"
+                            component="p"
+                            style={{ marginLeft: "20px" }}
+                          >
+                            {this.state.username}
+                          </Typography>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Modal>

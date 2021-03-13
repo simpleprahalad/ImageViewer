@@ -46,3 +46,21 @@
 .body-content {
   margin: 20px 10px;
 }
+
+.post-modal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-modal-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post-modal-avatar-img {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+}
