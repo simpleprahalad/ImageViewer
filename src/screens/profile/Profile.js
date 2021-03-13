@@ -3,6 +3,8 @@ import Header from "../../common/header/Header";
 import profileImg from "../../assets/images/profilePic.jpg";
 import "./Profile.css";
 import Typography from "@material-ui/core/Typography";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
 
 class Profile extends Component {
   constructor() {
@@ -116,15 +118,20 @@ class Profile extends Component {
                       Followed By: {this.state.NumOfFollowers}
                     </Typography>
                   </div>
-                  {<div className="profile-header-row3">
-                  <Typography
-                    variant="h6"
-                    component="h1"
-                    style={{ marginRight: "20px" }}
-                  >
-                    {this.state.fullName}
-                  </Typography>
-                </div>}
+                  {
+                    <div className="profile-header-row3">
+                      <Typography
+                        variant="h6"
+                        component="h1"
+                        style={{ marginRight: "20px" }}
+                      >
+                        {this.state.fullName}
+                      </Typography>
+                      <Fab color="secondary" aria-label="edit">
+                        <EditIcon />
+                      </Fab>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
