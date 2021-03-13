@@ -7,7 +7,11 @@ import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 import Modal from "@material-ui/core/Modal";
 import { withStyles } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 function getModalStyle() {
   const top = 50;
@@ -54,6 +58,8 @@ class Profile extends Component {
       NumOfFollowers: 50,
       fullName: "Prahalad Maheswari",
       openModal: false,
+      nameRequired: "dispNone",
+      name: "",
     };
   }
 
@@ -113,11 +119,24 @@ class Profile extends Component {
   }
 
   openModalHandler = () => {
-    this.setState({ openModal: true });
+    this.setState({ openModal: true, usernameRequired: "dispNone", name: "" });
   };
 
   modalCloseHander = () => {
     this.setState({ openModal: false });
+  };
+
+  //function to handle the input change event
+  inputNameChangeHandler = (e) => {
+    this.setState({ name: e.target.value });
+  };
+
+  //function to edit the name of the user
+  editNameHandler = () => {
+    //if the input field is empty display the required message or else set fullname of the user and close the modal
+    this.state.name === ""
+      ? this.setState({ nameRequired: "dispBlock" })
+      : this.setState({ fullName: this.state.name, openModal: false });
   };
 
   render() {
@@ -195,6 +214,18 @@ class Profile extends Component {
                     >
                       Edit
                     </Typography>
+                    <FormControl required>
+                      <InputLabel htmlFor="name">Full Name</InputLabel>
+                      <Input
+                        id="name"
+                        type="text"
+                        name={this.state.name}
+                        onChange={this.inputNameChangeHandler}
+                      />
+                      <FormHelperText className={this.state.nameRequired}>
+                        <span className="red">required</span>
+                      </FormHelperText>
+                    </FormControl>
                     <br />
                     <br />
                     <br />
