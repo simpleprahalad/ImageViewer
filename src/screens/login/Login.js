@@ -7,8 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import { Link } from "react-router-dom";
+import FormHelperText from "@material-ui/core/FormHelperText";  
 
 class Login extends Component {
   constructor() {
@@ -40,8 +39,7 @@ class Login extends Component {
 
     let username = "prahalad",
       password = "1",
-      accessToken =
-        "IGQVJYOGphZADFRWEJQN0dEZAGlUQTctU3NfNnFhNkRmQTMzeUJRMHVuM3lGZAl9RQmRIcmtfRzl3YnRiRHhYRGZAUOXZAGUEdiZA3ZAMRERtV1dNQmRJSVNsYjZAobWlOMmZAyNFJGeDNZARVE5MjlfelBnekRSZA1JremRMVXRRWHcw";
+      accessToken = "IGQVJYUHJ1elhkX2dCSmlFLS1zUmNza0ppcDZAnblFtT3BXQXhVS2pZAUHl3bWFjd0YxRXdvZAXctUUNzNnRtRFA4d2ZAzY2VnWmlqRFp3azhqN1VXRHFqUWVybGlYTlhobTRoNEZAtZAi1mblB6V0poU1EzTG14a0tRZAFZAGWFA0";
 
     this.setState({ incorrectCredentials: "dispNone" });
     if (
@@ -49,7 +47,7 @@ class Login extends Component {
       this.state.loginPassword === password
     ) {
       window.sessionStorage.setItem("access-token", accessToken);
-        this.props.history.push("/home");
+      this.props.history.push("/home");
     } else {
       if (this.state.username !== "" && this.state.loginPassword !== "") {
         this.setState({ incorrectCredentials: "dispBlock" });
@@ -102,15 +100,13 @@ class Login extends Component {
               </FormControl>
               <br />
               <br />
-              <Link to="/home">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.loginClickHandler}
-                >
-                  LOGIN
-                </Button>
-              </Link>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.loginClickHandler}
+              >
+                LOGIN
+              </Button>
             </div>
           </Card>
         </div>
