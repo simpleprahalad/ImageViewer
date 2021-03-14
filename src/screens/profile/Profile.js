@@ -67,6 +67,7 @@ class Profile extends Component {
       postModal: false,
       imageUrl: "",
       caption: "",
+      tags: [],
     };
   }
 
@@ -184,6 +185,7 @@ class Profile extends Component {
       imageUrl: clickedPost.media_url,
       username: clickedPost.username,
       caption: clickedPost.caption,
+      tags: clickedPost.caption.match(/#\S+/g),
     });
   };
 
@@ -341,6 +343,24 @@ class Profile extends Component {
                         <hr />
                         <Typography variant="body1" component="p">
                           {this.state.caption}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          style={{ color: "blue" }}
+                          display="inline"
+                        >
+                          {/* {this.state.tags + " "} */}
+                          {this.state.tags && this.state.tags.map((value, key) => {
+                            return (
+                              <span
+                                key={"tag" + key}
+                                style={{ marginRight: 5 }}
+                              >
+                                {" "}
+                                {value}{" "}
+                              </span>
+                            );
+                          })}
                         </Typography>
                       </div>
                     </div>
