@@ -34,6 +34,10 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: "20px",
+    outline: "none",
+    borderRadius: "5px",
+    borderColor: "gray",
+    borderStyle: "solid",
   },
 
   root: {
@@ -155,11 +159,11 @@ class Profile extends Component {
   }
 
   editModalHandler = () => {
-    this.setState({ editModal: true, usernameRequired: "dispNone", name: "" });
+    this.setState({ editModal: true, nameRequired: "dispNone", name: "" });
   };
 
-  modalCloseHander = () => {
-    this.setState({ editModal: false });
+  modalCloseHandler = () => {
+    this.setState({ editModal: false, nameRequired: "dispNone" });
   };
 
   //function to handle the input change event
@@ -323,7 +327,7 @@ class Profile extends Component {
                 </div>
                 <Modal
                   open={this.state.editModal}
-                  onClose={this.modalCloseHander}
+                  onClose={this.modalCloseHandler}
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
                 >
