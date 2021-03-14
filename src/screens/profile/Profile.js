@@ -15,6 +15,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Avatar from "@material-ui/core/Avatar";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 function getModalStyle() {
   const top = 50;
@@ -69,6 +71,10 @@ class Profile extends Component {
       caption: "",
       tags: [],
       postComments: ["dummy comment 1", "dummy comment 2"],
+      likeIcon: "",
+      likedIcon: "",
+      likesCount: 0,
+      postId: 0,
     };
   }
 
@@ -184,7 +190,48 @@ class Profile extends Component {
       username: clickedPost.username,
       caption: clickedPost.caption,
       tags: clickedPost.caption.match(/#\S+/g),
+      likeIcon: clickedPost.likeIcon,
+      likedIcon: clickedPost.likedIcon,
+      likesCount: clickedPost.likesCount,
+      postId: clickedPost.id,
     });
+  };
+
+  //function to add a like to a post
+  likeClickHandler = (id) => {
+    let postList = this.state.postList;
+    postList.forEach(function (post) {
+      // if the post id equal to the liked post id then display
+      // the likedIcon, hide the likeIcon, and increment like count by 1
+      if (post.id === id) {
+        post.likesCount += 1;
+        post.likeIcon = "dispNone";
+        post.likedIcon = "dispBlock";
+        this.setState({
+          likeIcon: "dispNone",
+          likedIcon: "dispBlock",
+          likesCount: post.likesCount
+        });
+      }
+    }, this);
+  };
+
+  //function to unlike a post
+  likedClickHandler = (id) => {
+    let postList = this.state.postList;
+    postList.forEach(function (post) {
+      // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+      if (post.id === id) {
+        post.likesCount -= 1;
+        post.likeIcon = "dispBlock";
+        post.likedIcon = "dispNone";
+        this.setState({
+          likeIcon: "dispBlock",
+          likedIcon: "dispNone",
+          likesCount: post.likesCount
+        });
+      }
+    }, this);
   };
 
   render() {
@@ -371,6 +418,31 @@ class Profile extends Component {
                               </span>
                             );
                           })}
+                        </div>
+                        <div className="post-modal-likes">
+                          <div
+                            className={this.state.likeIcon}
+                            onClick={() =>
+                              this.likeClickHandler(this.state.postId)
+                            }
+                          >
+                            <FavoriteBorderIcon />
+                          </div>
+                          <div className={this.state.likedIcon}>
+                            <FavoriteIcon
+                              style={{ color: "red" }}
+                              onClick={() =>
+                                this.likedClickHandler(this.state.postId)
+                              }
+                            />
+                          </div>
+                          <span style={{ marginLeft: 10, marginBottom: 8 }}>
+                            {this.state.likesCount < 2 ? (
+                              <div>{this.state.likesCount} like </div>
+                            ) : (
+                              <div>{this.state.likesCount} likes</div>
+                            )}
+                          </span>
                         </div>
                       </div>
                     </div>
