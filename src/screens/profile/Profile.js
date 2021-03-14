@@ -14,7 +14,7 @@ import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
 
 function getModalStyle() {
   const top = 50;
@@ -66,6 +66,7 @@ class Profile extends Component {
       postList: [],
       postModal: false,
       imageUrl: "",
+      caption: "",
     };
   }
 
@@ -182,6 +183,7 @@ class Profile extends Component {
     this.setState({
       imageUrl: clickedPost.media_url,
       username: clickedPost.username,
+      caption: clickedPost.caption,
     });
   };
 
@@ -336,6 +338,10 @@ class Profile extends Component {
                             {this.state.username}
                           </Typography>
                         </div>
+                        <hr />
+                        <Typography variant="body1" component="p">
+                          {this.state.caption}
+                        </Typography>
                       </div>
                     </div>
                   </div>
