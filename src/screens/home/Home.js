@@ -199,10 +199,10 @@ class Home extends Component {
                       title={post.username}
                       // subheader="03/10/2018 16:07:24"
                       subheader={
+                        post.timestamp.getDate() +
+                        "/" +
                         post.timestamp.getMonth() +
                         1 +
-                        "/" +
-                        post.timestamp.getDate() +
                         "/" +
                         post.timestamp.getFullYear() +
                         " " +
@@ -218,6 +218,7 @@ class Home extends Component {
                         className={classes.media}
                         image={post.media_url}
                       />
+                      <hr />
                       <Typography variant="body2" color="inherit" component="p">
                         {post.caption}
                       </Typography>
