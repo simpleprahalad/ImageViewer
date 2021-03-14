@@ -75,6 +75,7 @@ class Profile extends Component {
       likedIcon: "",
       likesCount: 0,
       postId: 0,
+      comment: "",
     };
   }
 
@@ -194,6 +195,7 @@ class Profile extends Component {
       likedIcon: clickedPost.likedIcon,
       likesCount: clickedPost.likesCount,
       postId: clickedPost.id,
+      postComments: clickedPost.postComments,
     });
   };
 
@@ -210,7 +212,7 @@ class Profile extends Component {
         this.setState({
           likeIcon: "dispNone",
           likedIcon: "dispBlock",
-          likesCount: post.likesCount
+          likesCount: post.likesCount,
         });
       }
     }, this);
@@ -228,10 +230,34 @@ class Profile extends Component {
         this.setState({
           likeIcon: "dispBlock",
           likedIcon: "dispNone",
-          likesCount: post.likesCount
+          likesCount: post.likesCount,
         });
       }
     }, this);
+  };
+
+  addCommentHandler = (id) => {
+    if (this.state.comment === "") {
+      alert("Cannot add Empty comment");
+    } else {
+      let postList = this.state.postList;
+      postList.forEach(function (post) {
+        //if the post id is equal to the commented post id, then add the comment in the postComments array
+        if (post.id === id) {
+          post.postComments.push(this.state.comment);
+          this.setState({
+            comment: "",
+            postComments: post.postComments,
+          });
+          post.clear = "";
+        }
+      }, this);
+    }
+  };
+
+  //function to handle the input change event
+  commentChangeHandler = (e) => {
+    this.setState({ comment: e.target.value });
   };
 
   render() {
@@ -443,6 +469,28 @@ class Profile extends Component {
                               <div>{this.state.likesCount} likes</div>
                             )}
                           </span>
+                        </div>
+                        <div className="post-modal-comments">
+                          <FormControl className="post-modal-control">
+                            <InputLabel htmlFor="comment">
+                              Add a comment
+                            </InputLabel>
+                            <Input
+                              comment={this.state.comment}
+                              onChange={this.commentChangeHandler}
+                              value={this.state.comment}
+                            />
+                          </FormControl>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ marginLeft: 20 }}
+                            onClick={() =>
+                              this.addCommentHandler(this.state.postId)
+                            }
+                          >
+                            ADD
+                          </Button>
                         </div>
                       </div>
                     </div>
