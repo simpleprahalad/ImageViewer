@@ -35,7 +35,6 @@ class Home extends Component {
       likeIcon: "dispBlock",
       likedIcon: "dispNone",
       comment: "",
-      commentArea: "dispNone",
     };
   }
 
@@ -49,9 +48,10 @@ class Home extends Component {
         that.setState({
           endpoint1: JSON.parse(this.responseText).data,
         });
-        that.state.endpoint1 && that.state.endpoint1.map((info) => {
-          return that.getImages(info);
-        });
+        that.state.endpoint1 &&
+          that.state.endpoint1.map((info) => {
+            return that.getImages(info);
+          });
       }
     });
 
@@ -86,8 +86,6 @@ class Home extends Component {
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
         post.likesCount = Math.floor(Math.random() * 10);
-        post.postComments = "dispNone";
-        post.commentArea = "";
         post.clear = "";
         post.tags = post.caption.match(/#\S+/g);
         post.commentContent = [];
@@ -228,7 +226,18 @@ class Home extends Component {
                         style={{ color: "blue" }}
                         display="inline"
                       >
-                        {post.tags + " "}
+                        {post.tags &&
+                          post.tags.map((value, key) => {
+                            return (
+                              <span
+                                key={"tag" + key}
+                                style={{ marginRight: 5 }}
+                              >
+                                {" "}
+                                {value}{" "}
+                              </span>
+                            );
+                          })}
                       </Typography>
                       <CardActions disableSpacing>
                         <div className="likes">

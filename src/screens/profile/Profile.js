@@ -68,6 +68,7 @@ class Profile extends Component {
       imageUrl: "",
       caption: "",
       tags: [],
+      postComments: ["dummy comment 1", "dummy comment 2"],
     };
   }
 
@@ -122,15 +123,12 @@ class Profile extends Component {
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
         post.likesCount = Math.floor(Math.random() * 10);
-        post.postComments = "dispNone";
-        post.commentArea = "";
         post.clear = "";
         post.tags = post.caption.match(/#\S+/g);
-        post.commentContent = [];
+        post.postComments = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
-        console.log(newStateArray);
         that.setState({ postList: newStateArray });
         that.setState({ username: parsedData.username });
       }
@@ -315,7 +313,7 @@ class Profile extends Component {
                 >
                   <div style={getModalStyle()} className={classes.paper}>
                     <div className="post-modal-container">
-                      <div style={{ marginRight: "10px" }}>
+                      <div className="post-modal-image-container">
                         <img
                           src={this.state.imageUrl}
                           alt={this.state.username}
@@ -349,19 +347,31 @@ class Profile extends Component {
                           style={{ color: "blue" }}
                           display="inline"
                         >
-                          {/* {this.state.tags + " "} */}
-                          {this.state.tags && this.state.tags.map((value, key) => {
+                          {this.state.tags &&
+                            this.state.tags.map((value, key) => {
+                              return (
+                                <span
+                                  key={"tag" + key}
+                                  style={{ marginRight: 5 }}
+                                >
+                                  {" "}
+                                  {value}{" "}
+                                </span>
+                              );
+                            })}
+                        </Typography>
+                        <div className="post-modal-comments-section">
+                          {this.state.postComments.map((value, key) => {
                             return (
-                              <span
-                                key={"tag" + key}
-                                style={{ marginRight: 5 }}
-                              >
-                                {" "}
-                                {value}{" "}
+                              <span key={"comment" + key}>
+                                <span style={{ fontWeight: "bold" }}>
+                                  {this.state.username}:{" "}
+                                </span>
+                                {value}
                               </span>
                             );
                           })}
-                        </Typography>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -64,3 +64,15 @@
   height: 45px;
   width: 45px;
 }
+
+.post-modal-image-container {
+  margin-right: 10px;
+  width: 300px;
+  height: 400px;
+}
+
+.post-modal-comments-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
