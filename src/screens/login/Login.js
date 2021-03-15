@@ -34,8 +34,8 @@ class Login extends Component {
   // function to handle login feature when user presses "LOGIN" button
   loginClickHandler = () => {
     // Login Credentials
-    let username = "prahalad",
-      password = "1",
+    let username = "admin",
+      password = "admin",
       accessToken =
         "IGQVJXQktVUmd4V2pGSHNnTTZAId0V5dTVYenQ4aG5LaVJ4N2RhaWtDX1ktRC1mTVh3UHAya2NucnVmVC1wZAVNBdjRtTmdoMEJNcWU0NE5wUXVlZAGNOUWtTekc0UWZAQYXp1cFM0b0hjazRBYkxPNUR1ZA0RWdjN6b1MxRzdN";
 
