@@ -175,6 +175,24 @@ class Home extends Component {
     }
   };
 
+  getPostDate = (timestamp) => {
+    const dd = ("0" + timestamp.getDate()).slice(-2),
+      mm = ("0" + (timestamp.getMonth() + 1)).slice(-2);
+    return (
+      dd +
+      "/" +
+      mm +
+      "/" +
+      timestamp.getFullYear() +
+      " " +
+      timestamp.getHours() +
+      ":" +
+      timestamp.getMinutes() +
+      ":" +
+      timestamp.getSeconds()
+    );
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -198,20 +216,7 @@ class Home extends Component {
                       avatar={<Avatar src={post.profilePic} alt="pic" />}
                       title={post.username}
                       // subheader="03/10/2018 16:07:24"
-                      subheader={
-                        post.timestamp.getDate() +
-                        "/" +
-                        post.timestamp.getMonth() +
-                        1 +
-                        "/" +
-                        post.timestamp.getFullYear() +
-                        " " +
-                        post.timestamp.getHours() +
-                        ":" +
-                        post.timestamp.getMinutes() +
-                        ":" +
-                        post.timestamp.getSeconds()
-                      }
+                      subheader={this.getPostDate(post.timestamp)}
                     />
                     <CardContent>
                       <CardMedia
