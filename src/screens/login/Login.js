@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import FormHelperText from "@material-ui/core/FormHelperText";  
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 class Login extends Component {
   constructor() {
@@ -21,34 +21,48 @@ class Login extends Component {
     };
   }
 
+  // function for handing the username entered by user
   inputUserNameChangeHandler = (e) => {
     this.setState({ username: e.target.value });
   };
 
+  // function for handing the password entered by user
   inputLoginPasswordChangeHandler = (e) => {
     this.setState({ loginPassword: e.target.value });
   };
 
+  // function to handle login feature when user presses "LOGIN" button
   loginClickHandler = () => {
+    // Login Credentials
+    let username = "prahalad",
+      password = "1",
+      accessToken =
+        "IGQVJXQktVUmd4V2pGSHNnTTZAId0V5dTVYenQ4aG5LaVJ4N2RhaWtDX1ktRC1mTVh3UHAya2NucnVmVC1wZAVNBdjRtTmdoMEJNcWU0NE5wUXVlZAGNOUWtTekc0UWZAQYXp1cFM0b0hjazRBYkxPNUR1ZA0RWdjN6b1MxRzdN";
+
+    // handling the "required" field for username
     this.state.username === ""
       ? this.setState({ usernameRequired: "dispBlock" })
       : this.setState({ usernameRequired: "dispNone" });
+
+    // handling the "required" field for passowrd
     this.state.loginPassword === ""
       ? this.setState({ loginPasswordRequired: "dispBlock" })
       : this.setState({ loginPasswordRequired: "dispNone" });
 
-    let username = "prahalad",
-      password = "1",
-      accessToken = "IGQVJYUHJ1elhkX2dCSmlFLS1zUmNza0ppcDZAnblFtT3BXQXhVS2pZAUHl3bWFjd0YxRXdvZAXctUUNzNnRtRFA4d2ZAzY2VnWmlqRFp3azhqN1VXRHFqUWVybGlYTlhobTRoNEZAtZAi1mblB6V0poU1EzTG14a0tRZAFZAGWFA0";
-
+    // removing the default text to be displayed when user gives incorrect login credentials
     this.setState({ incorrectCredentials: "dispNone" });
+
     if (
       this.state.username === username &&
       this.state.loginPassword === password
     ) {
-      window.sessionStorage.setItem("access-token", accessToken);
+      // when username and password matches correctly, storing the access token in session storage
+      sessionStorage.setItem("access-token", accessToken);
+
+      // launching home page
       this.props.history.push("/home");
     } else {
+      // Displaying the incrrect login id/passwd when user gives incorrect login credentials
       if (this.state.username !== "" && this.state.loginPassword !== "") {
         this.setState({ incorrectCredentials: "dispBlock" });
       }
@@ -65,7 +79,9 @@ class Login extends Component {
               <Typography variant="h5" component="h2">
                 LOGIN
               </Typography>
+
               <br />
+
               <FormControl required>
                 <InputLabel htmlFor="username"> Username </InputLabel>
                 <Input
@@ -78,8 +94,10 @@ class Login extends Component {
                   <span className="red">required</span>
                 </FormHelperText>
               </FormControl>
+
               <br />
               <br />
+
               <FormControl required>
                 <InputLabel htmlFor="Password"> Password </InputLabel>
                 <Input
@@ -98,8 +116,10 @@ class Login extends Component {
                   </span>
                 </FormHelperText>
               </FormControl>
+
               <br />
               <br />
+
               <Button
                 variant="contained"
                 color="primary"

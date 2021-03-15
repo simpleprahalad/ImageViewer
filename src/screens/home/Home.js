@@ -19,7 +19,7 @@ import profileImg from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
   media: {
-    height: 150,
+    height: 0,
     paddingTop: "56.25%", // 16:9,
   },
 });
@@ -43,16 +43,18 @@ class Home extends Component {
     let data = null;
     let xhr = new XMLHttpRequest();
     let that = this;
-    let accessToken = window.sessionStorage.getItem("access-token");
+    let accessToken = sessionStorage.getItem("access-token");
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
+      if (this.readyState === 4 && this.status === 200) {
         that.setState({
           endpoint1: JSON.parse(this.responseText).data,
         });
-        //Calling 2nd API only if we get response from 1st API
+
+        // Calling 2nd API only if we get response from 1st API
+        // Getting post details using ID received from 1st API endpoint
         that.state.endpoint1 &&
           that.state.endpoint1.map((info) => {
-            return that.getImages(info);
+            return that.getPostDetails(info);
           });
       }
     });
@@ -70,13 +72,14 @@ class Home extends Component {
     xhr.send(data);
   }
 
-  getImages(info) {
+  // API for getting Post details
+  getPostDetails(info) {
     let data = null;
     let xhr = new XMLHttpRequest();
     let that = this;
     let accessToken = window.sessionStorage.getItem("access-token");
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
+      if (this.readyState === 4 && this.status === 200) {
         let parsedData = JSON.parse(this.responseText);
         let newStateArray;
         let post = {};
