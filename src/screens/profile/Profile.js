@@ -74,7 +74,7 @@ class Profile extends Component {
       imageUrl: "",
       caption: "",
       tags: [],
-      postComments: ["dummy comment 1", "dummy comment 2"],
+      postComments: [],
       likeIcon: "",
       likedIcon: "",
       likesCount: 0,
@@ -83,6 +83,7 @@ class Profile extends Component {
     };
   }
 
+  // Invoking APIs when component mounts
   componentDidMount() {
     let data = null;
     let xhr = new XMLHttpRequest();
@@ -96,6 +97,7 @@ class Profile extends Component {
         that.setState({
           totalPostCount: that.state.endpoint1 && that.state.endpoint1.length,
         });
+        //Calling 2nd API only if we get response from 1st API
         that.state.endpoint1 &&
           that.state.endpoint1.map((info) => {
             return that.getImages(info);
@@ -140,8 +142,9 @@ class Profile extends Component {
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
-        that.setState({ postList: newStateArray });
-        that.setState({ username: parsedData.username });
+        that.setState({
+          postList: newStateArray,
+        });
       }
     });
 

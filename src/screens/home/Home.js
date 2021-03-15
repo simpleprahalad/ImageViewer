@@ -38,6 +38,7 @@ class Home extends Component {
     };
   }
 
+  // Invoking APIs when component mounts
   componentDidMount() {
     let data = null;
     let xhr = new XMLHttpRequest();
@@ -48,6 +49,7 @@ class Home extends Component {
         that.setState({
           endpoint1: JSON.parse(this.responseText).data,
         });
+        //Calling 2nd API only if we get response from 1st API
         that.state.endpoint1 &&
           that.state.endpoint1.map((info) => {
             return that.getImages(info);
@@ -92,8 +94,10 @@ class Home extends Component {
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
-        that.setState({ postList: newStateArray });
-        that.setState({ postListForSearch: newStateArray });
+        that.setState({
+          postList: newStateArray,
+          postListForSearch: newStateArray,
+        });
       }
     });
 
@@ -110,6 +114,7 @@ class Home extends Component {
     xhr.send(data);
   }
 
+  // function for displaying the filtered post
   filteredPostHandler = (filteredPost) => {
     this.setState({ postList: filteredPost });
   };
@@ -136,7 +141,8 @@ class Home extends Component {
   likedClickHandler = (id) => {
     let postList = this.state.postList;
     postList.forEach(function (post) {
-      // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+      // if the post id equal to the liked post id then display the likeIcon,
+      // hide the likedIcon, and decrement like count by 1
       if (post.id === id) {
         post.likesCount -= 1;
         post.likeIcon = "dispBlock";
