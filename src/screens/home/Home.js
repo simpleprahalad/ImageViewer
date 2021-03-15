@@ -15,6 +15,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import profileImg from "../../assets/images/profilePic.jpg";
 
 const useStyles = (theme) => ({
   media: {
@@ -27,18 +28,17 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      profilePic:
-        "https://instagram.fblr1-3.fna.fbcdn.net/v/t51.2885-19/s320x320/145135244_432529917944662_4618383355731614603_n.jpg?tp=1&_nc_ht=instagram.fblr1-3.fna.fbcdn.net&_nc_ohc=gwvhBj0cQ1UAX9g_7sP&oh=706ee3d41b8fdd74c3fe2ecefc22afe1&oe=60701196",
+      profilePic: profileImg,
       endpoint1: [],
       postListForSearch: [],
       postList: [],
       likeIcon: "dispBlock",
       likedIcon: "dispNone",
       comment: "",
-      commentArea: "dispNone",
     };
   }
 
+  // Invoking APIs when component mounts
   componentDidMount() {
     let data = null;
     let xhr = new XMLHttpRequest();
@@ -49,9 +49,11 @@ class Home extends Component {
         that.setState({
           endpoint1: JSON.parse(this.responseText).data,
         });
-        that.state.endpoint1.map((info) => {
-          return that.getImages(info);
-        });
+        //Calling 2nd API only if we get response from 1st API
+        that.state.endpoint1 &&
+          that.state.endpoint1.map((info) => {
+            return that.getImages(info);
+          });
       }
     });
 
@@ -85,18 +87,17 @@ class Home extends Component {
         post.username = parsedData.username;
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
-        post.likes = {};
-        post.likes.count = 5;
-        post.postComments = "dispNone";
-        post.commentArea = "";
+        post.likesCount = Math.floor(Math.random() * 10);
         post.clear = "";
-        post.tags = `#tag1 #tag2`;
+        post.tags = post.caption.match(/#\S+/g);
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         newStateArray = that.state.postList.slice();
         newStateArray.push(post);
-        that.setState({ postList: newStateArray });
-        that.setState({ postListForSearch: newStateArray });
+        that.setState({
+          postList: newStateArray,
+          postListForSearch: newStateArray,
+        });
       }
     });
 
@@ -113,7 +114,8 @@ class Home extends Component {
     xhr.send(data);
   }
 
-  myCallback = (filteredPost) => {
+  // function for displaying the filtered post
+  filteredPostHandler = (filteredPost) => {
     this.setState({ postList: filteredPost });
   };
 
@@ -124,7 +126,7 @@ class Home extends Component {
       // if the post id equal to the liked post id then display
       // the likedIcon, hide the likeIcon, and increment like count by 1
       if (post.id === id) {
-        post.likes.count += 1;
+        post.likesCount += 1;
         post.likeIcon = "dispNone";
         post.likedIcon = "dispBlock";
         this.setState({
@@ -139,9 +141,10 @@ class Home extends Component {
   likedClickHandler = (id) => {
     let postList = this.state.postList;
     postList.forEach(function (post) {
-      // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+      // if the post id equal to the liked post id then display the likeIcon,
+      // hide the likedIcon, and decrement like count by 1
       if (post.id === id) {
-        post.likes.count -= 1;
+        post.likesCount -= 1;
         post.likeIcon = "dispBlock";
         post.likedIcon = "dispNone";
         this.setState({
@@ -178,6 +181,24 @@ class Home extends Component {
     }
   };
 
+  getPostDate = (timestamp) => {
+    const dd = ("0" + timestamp.getDate()).slice(-2),
+      mm = ("0" + (timestamp.getMonth() + 1)).slice(-2);
+    return (
+      dd +
+      "/" +
+      mm +
+      "/" +
+      timestamp.getFullYear() +
+      " " +
+      timestamp.getHours() +
+      ":" +
+      timestamp.getMinutes() +
+      ":" +
+      timestamp.getSeconds()
+    );
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -190,7 +211,7 @@ class Home extends Component {
               profilePic={this.state.profilePic}
               baseUrl={this.props.baseUrl}
               list={this.state.postListForSearch}
-              callbackFromHome={this.myCallback}
+              callbackFromHome={this.filteredPostHandler}
               history={this.props.history}
             />
             <div className="container">
@@ -201,26 +222,14 @@ class Home extends Component {
                       avatar={<Avatar src={post.profilePic} alt="pic" />}
                       title={post.username}
                       // subheader="03/10/2018 16:07:24"
-                      subheader={
-                        post.timestamp.getMonth() +
-                        1 +
-                        "/" +
-                        post.timestamp.getDate() +
-                        "/" +
-                        post.timestamp.getFullYear() +
-                        " " +
-                        post.timestamp.getHours() +
-                        ":" +
-                        post.timestamp.getMinutes() +
-                        ":" +
-                        post.timestamp.getSeconds()
-                      }
+                      subheader={this.getPostDate(post.timestamp)}
                     />
                     <CardContent>
                       <CardMedia
                         className={classes.media}
                         image={post.media_url}
                       />
+                      <hr />
                       <Typography variant="body2" color="inherit" component="p">
                         {post.caption}
                       </Typography>
@@ -229,7 +238,18 @@ class Home extends Component {
                         style={{ color: "blue" }}
                         display="inline"
                       >
-                        {post.tags}
+                        {post.tags &&
+                          post.tags.map((value, key) => {
+                            return (
+                              <span
+                                key={"tag" + key}
+                                style={{ marginRight: 5 }}
+                              >
+                                {" "}
+                                {value}{" "}
+                              </span>
+                            );
+                          })}
                       </Typography>
                       <CardActions disableSpacing>
                         <div className="likes">
@@ -246,10 +266,10 @@ class Home extends Component {
                             />
                           </div>
                           <span style={{ marginLeft: 10, marginBottom: 8 }}>
-                            {post.likes.count < 2 ? (
-                              <div> {post.likes.count} like </div>
+                            {post.likesCount < 2 ? (
+                              <div> {post.likesCount} like </div>
                             ) : (
-                              <div> {post.likes.count} likes </div>
+                              <div> {post.likesCount} likes </div>
                             )}
                           </span>
                         </div>

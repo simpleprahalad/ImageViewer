@@ -74,7 +74,7 @@ class Header extends Component {
   //function to change the state of the search box to filter the posts according to their caption
   inputChangeHandler = (e) => {
     let newList = this.props.list.filter((post) => {
-      return String(post.caption).toLowerCase().indexOf(e.target.value) >= 0;
+      return String(post.caption).toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0;
     });
     this.props.callbackFromHome(newList);
   };
@@ -87,6 +87,14 @@ class Header extends Component {
   //function to close the dropdown menu
   closeHandler = () => {
     this.setState({ type: null });
+  };
+
+  myAccountHandler = () => {
+    this.props.history.push("/profile");
+  };
+
+  logoHandler = () => {
+    this.props.history.push("/home");
   };
 
   //function to clear the session storage and redirect to the login page
@@ -102,12 +110,13 @@ class Header extends Component {
         <header className="app-header">
           <span
             className="logo"
-            style={this.props.home === "true" ? { cursor: "pointer" } : null}
+            style={this.props.profile === "true" ? { cursor: "pointer" } : null}
+            onClick={this.props.profile === "true" ? this.logoHandler : null}
           >
             Image Viewer
           </span>
           <div>
-            {this.props.home === "true" ? (
+            {this.props.home === "true" || this.props.profile === "true" ? (
               <div className="pro-pic">
                 <IconButton className="icon" onClick={this.openHandler}>
                   <img
@@ -123,16 +132,26 @@ class Header extends Component {
                   open={Boolean(this.state.type)}
                   onClose={this.closeHandler}
                 >
-                  <StyledMenuItem>
-                    <ListItemText
-                      primary={
-                        <Typography type="body2" style={{ fontWeight: "bold" }}>
-                          My Account
-                        </Typography>
-                      }
-                    />
-                  </StyledMenuItem>
-                  <hr style={{ marginLeft: 15, marginRight: 15 }} />
+                  {this.props.home === "true" ? (
+                    <div>
+                      <StyledMenuItem>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              type="body2"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              My Account
+                            </Typography>
+                          }
+                          onClick={this.myAccountHandler}
+                        />
+                      </StyledMenuItem>
+                      <hr style={{ marginLeft: 15, marginRight: 15 }} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <StyledMenuItem>
                     <ListItemText
                       primary={
